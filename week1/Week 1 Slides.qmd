@@ -1,0 +1,172 @@
+---
+title: "Time Series Analysis: Week 1"
+author: Orkhan Hasanaliyev
+format: 
+  revealjs:
+    transition: slide
+editor: visual
+---
+
+## Syllabus
+
+[Syllabus](images/Syllabus.pdf)
+
+Textbook: *Forecasting: principles and practice* by Hyndman and Athanasopoulos, available free online at <https://otexts.com/fpp3/>
+
+## R and RStudio
+
+Download and install R and RStudio:
+
+<https://posit.co/download/rstudio-desktop/>
+
+Refer to these videos for help:
+
+For Macs: <https://www.youtube.com/watch?v=f9vEBtwcD6M>
+
+For Windows: <https://www.youtube.com/watch?v=H9EBlFDGG4k>
+
+## Use R Project for Your Coursework
+
+-   Allows quick switching between projects within the RStudio IDE.
+
+-   Opening a project restores your open tabs from last use.
+
+-   Encourages organised file structure practices, notably a project should contain all files used by that project.
+
+## Create a New Project
+
+![](images/project_1.png)
+
+## Select New Directory
+
+![](images/project_2.png)
+
+## Select New Project
+
+![](images/project_3.png)
+
+## Name Your Project
+
+![](images/project_4.png)
+
+## Main Packages
+
+-   Install the following packages: install.packages(c("tidyverse", "fpp3"))
+
+## Load ffp3 package
+
+-   Load fpp3 package
+
+```{r}
+#| label: setup
+#| echo: true
+#| message: true
+library(fpp3)
+
+```
+
+## Benefits of using a Project
+
+```{r}
+#| echo: true
+#| message: true
+cars
+```
+
+## Benefits of using a Project
+
+-   Create a data folder, and then write a file in csv format.
+
+-   This way we use relative paths instead of absolute paths
+
+```{r}
+#| echo: true
+#| message: true
+readr::write_csv(cars, "data/cars.csv")
+```
+
+## Check the type of data
+
+```{r}
+#| echo: true
+#| message: true
+data()
+```
+
+-   In ECON 41 you used data.frame and/or tibble.
+-   What is the type of cars?
+
+## What is the type of cars?
+
+```{r}
+#| echo: true
+#| message: true
+class(cars)
+```
+
+What is the type of AirPassengers?
+
+## What is the type of AirPassengers?
+
+```{r}
+#| echo: true
+#| message: true
+class(AirPassengers)
+```
+
+What is the type of us_rent_income?
+
+## What is the type of us_rent_income?
+
+```{r}
+#| echo: true
+#| message: true
+us_rent_income
+```
+
+What is the type of global_economy?
+
+## What is the type of global_economy?
+
+```{r}
+#| echo: true
+#| message: true
+global_economy
+```
+
+`tsibble` objects extend tidy data frames (`tibble` objects) by introducing temporal structure and works well with tidyverse functions.
+
+## `tsibble` Objects
+
+1.  **Index** is a variable with inherent ordering from past to present.
+2.  **Key** is a set of variables that define observational units over time.
+3.  Each observation should be uniquely identified by index and key.
+4.  Each observational unit should be measured at a common interval, if regularly spaced.
+
+## global_economy data
+
+-   15150 observations (rows) and 9 variables (columns)
+
+-   Data frequency is annual: \[1Y\]
+
+-   **Index**: Year
+
+-   **Key**: Country. There are 263 time series, one for each country
+
+-   The rest 7 variables are **Measured Variables**
+
+**Warm Up: Explore another tsibble data**
+
+## Creating `tsibble` object
+Let's create a `tsibble` object using `tsibble()` function
+```{r}
+#| echo: true
+#| message: true
+myGPA <- tsibble(
+  Year = 2021:2024,
+  Observation = c(3.5, 3.7, 3.9, 3.2),
+  index = Year
+)
+```
+
+

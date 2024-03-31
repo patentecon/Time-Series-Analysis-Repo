@@ -1,0 +1,76 @@
+---
+title: "Peer Review Assignment 1: Due on Sunday, April 7 at midnight"
+author: enter your name here
+format: html
+editor: visual
+---
+
+
+## Grading guidance
+
+You will receive 60 points for submitting the assignment and a few points for each correct part as shown below.
+
+----------------------
+## Getting data from FRED: (10 points)
+
+For this assignment you need to access FRED database and get Real GDP per Capita for the US (ID# A939RX0Q048SBEA).
+
+Read the following instructions to learn how to obtain access to FRED database using FRED API. <https://cran.r-project.org/web/packages/fredr/vignettes/fredr.html>
+
+Once you get access to FRED, retrieve Real GDP per Capita between the first quarter of 1970 and the first quarter of 2024.
+
+Show your code below
+Make sure to not display your FRED API key, it is a private information.  
+
+```{r}
+#| label: setup
+#| echo: true
+#| message: true
+
+```
+
+Now that you have retrieved the data, answer the following questions:
+
+## What is the type of this data? (6 points)
+```{r}
+#| echo: true
+#| message: true
+
+
+```
+
+## Change the series_id variable values to "RGDP per capita": (6 points)
+
+```{r}
+#| echo: true
+#| message: true
+
+
+```
+
+## Coerce your data frame to tsibble: (6 points)
+
+```{r}
+#| echo: true
+#| message: true
+
+
+```
+
+## What was RGDP per capita in the first quarter of 2021?: (6 points)
+
+```{r}
+#| echo: true
+#| message: true
+
+
+```
+
+## What was an annualized rate of RGDP per capita growth over the time period of your data? : (6 points)
+
+```{r}
+#| echo: true
+#| message: true
+
+
+```
