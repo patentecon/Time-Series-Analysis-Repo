@@ -401,10 +401,20 @@ Orkhan Hasanaliyev
 </div>
 
 </section>
+<section id="section" class="slide level2">
+<h2></h2>
+<p><em>“It is difficult to make predictions, especially about the future.”</em><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<em>Niels Bohr</em></p>
+</section>
 <section id="syllabus" class="slide level2">
 <h2>Syllabus</h2>
-<p><a href="images/Syllabus.pdf">Syllabus</a></p>
+<p><a href="images/ECON%20174%20Syllabus%20Spring%202024.docx">Syllabus</a></p>
 <p>Textbook: <em>Forecasting: principles and practice</em> by Hyndman and Athanasopoulos, available free online at <a href="https://otexts.com/fpp3/" class="uri">https://otexts.com/fpp3/</a></p>
+<p>Accessing course data and scripts:</p>
+<ul>
+<li><p>Using github (might need GitZip for github browser extension to download weekly content) <a href="https://github.com/patentecon/Time-Series-Analysis-Repo" class="uri">https://github.com/patentecon/Time-Series-Analysis-Repo</a></p></li>
+<li><p>Camino</p></li>
+</ul>
 </section>
 <section id="r-and-rstudio" class="slide level2">
 <h2>R and RStudio</h2>
@@ -455,11 +465,11 @@ Orkhan Hasanaliyev
 <pre><code>── Attaching packages ────────────────────────────────────────────── fpp3 0.5 ──</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>✔ tibble      3.2.1     ✔ tsibble     1.1.3
+<pre><code>✔ tibble      3.2.1     ✔ tsibble     1.1.4
 ✔ dplyr       1.1.4     ✔ tsibbledata 0.4.1
-✔ tidyr       1.3.0     ✔ feasts      0.3.1
-✔ lubridate   1.9.3     ✔ fable       0.3.3
-✔ ggplot2     3.4.4     ✔ fabletools  0.3.4</code></pre>
+✔ tidyr       1.3.1     ✔ feasts      0.3.2
+✔ lubridate   1.9.3     ✔ fable       0.3.4
+✔ ggplot2     3.5.0     ✔ fabletools  0.4.1</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>── Conflicts ───────────────────────────────────────────────── fpp3_conflicts ──
@@ -647,7 +657,348 @@ Orkhan Hasanaliyev
 <span id="cb17-2"><a href="#cb17-2"></a>  <span class="at">Year =</span> <span class="dv">2021</span><span class="sc">:</span><span class="dv">2024</span>,</span>
 <span id="cb17-3"><a href="#cb17-3"></a>  <span class="at">Observation =</span> <span class="fu">c</span>(<span class="fl">3.5</span>, <span class="fl">3.7</span>, <span class="fl">3.9</span>, <span class="fl">3.2</span>),</span>
 <span id="cb17-4"><a href="#cb17-4"></a>  <span class="at">index =</span> Year</span>
-<span id="cb17-5"><a href="#cb17-5"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb17-5"><a href="#cb17-5"></a>)</span>
+<span id="cb17-6"><a href="#cb17-6"></a>myGPA</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tsibble: 4 x 2 [1Y]
+   Year Observation
+  &lt;int&gt;       &lt;dbl&gt;
+1  2021         3.5
+2  2022         3.7
+3  2023         3.9
+4  2024         3.2</code></pre>
+</div>
+</div>
+</section>
+<section id="coercing-tibble-object-to-tsibble" class="slide level2">
+<h2>Coercing <code>tibble</code> object to <code>tsibble</code></h2>
+<p>Here is the <code>tibble</code> object</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>myGPA <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb19-2"><a href="#cb19-2"></a>  <span class="at">Year =</span> <span class="dv">2021</span><span class="sc">:</span><span class="dv">2024</span>,</span>
+<span id="cb19-3"><a href="#cb19-3"></a>  <span class="at">Observation =</span> <span class="fu">c</span>(<span class="fl">3.5</span>, <span class="fl">3.7</span>, <span class="fl">3.9</span>, <span class="fl">3.2</span>)</span>
+<span id="cb19-4"><a href="#cb19-4"></a>)</span>
+<span id="cb19-5"><a href="#cb19-5"></a>myGPA</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 2
+   Year Observation
+  &lt;int&gt;       &lt;dbl&gt;
+1  2021         3.5
+2  2022         3.7
+3  2023         3.9
+4  2024         3.2</code></pre>
+</div>
+</div>
+</section>
+<section id="coercing-tibble-object-to-tsibble-1" class="slide level2">
+<h2>Coercing <code>tibble</code> object to <code>tsibble</code></h2>
+<p>By utilizing <code>as_tsibble()</code> we get</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>myGPA<span class="sc">|&gt;</span> </span>
+<span id="cb21-2"><a href="#cb21-2"></a>  <span class="fu">as_tsibble</span>(<span class="at">index=</span>Year)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tsibble: 4 x 2 [1Y]
+   Year Observation
+  &lt;int&gt;       &lt;dbl&gt;
+1  2021         3.5
+2  2022         3.7
+3  2023         3.9
+4  2024         3.2</code></pre>
+</div>
+</div>
+</section>
+<section id="example-1" class="slide level2">
+<h2>Example 1</h2>
+<p>Let’s download an excel file and read it. Note, this data is in <code>tibble</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a><span class="fu">download.file</span>(<span class="st">"http://OTexts.com/fpp3/extrafiles/tourism.xlsx"</span>,</span>
+<span id="cb23-2"><a href="#cb23-2"></a>              tourism_file <span class="ot">&lt;-</span> <span class="fu">tempfile</span>(), <span class="at">mode =</span> <span class="st">"wb"</span>)</span>
+<span id="cb23-3"><a href="#cb23-3"></a>my_tourism <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_excel</span>(tourism_file) </span>
+<span id="cb23-4"><a href="#cb23-4"></a>my_tourism</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 24,320 × 5
+   Quarter    Region   State           Purpose  Trips
+   &lt;chr&gt;      &lt;chr&gt;    &lt;chr&gt;           &lt;chr&gt;    &lt;dbl&gt;
+ 1 1998-01-01 Adelaide South Australia Business  135.
+ 2 1998-04-01 Adelaide South Australia Business  110.
+ 3 1998-07-01 Adelaide South Australia Business  166.
+ 4 1998-10-01 Adelaide South Australia Business  127.
+ 5 1999-01-01 Adelaide South Australia Business  137.
+ 6 1999-04-01 Adelaide South Australia Business  200.
+ 7 1999-07-01 Adelaide South Australia Business  169.
+ 8 1999-10-01 Adelaide South Australia Business  134.
+ 9 2000-01-01 Adelaide South Australia Business  154.
+10 2000-04-01 Adelaide South Australia Business  169.
+# ℹ 24,310 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="example-1-cont" class="slide level2">
+<h2>Example 1 (con’t)</h2>
+<p>Coerce <code>tibble</code> object to <code>tsibble</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a>my_tourism <span class="ot">&lt;-</span> my_tourism <span class="sc">|&gt;</span></span>
+<span id="cb25-2"><a href="#cb25-2"></a>  <span class="fu">mutate</span>(<span class="at">Quarter =</span> <span class="fu">yearquarter</span>(Quarter)) <span class="sc">|&gt;</span></span>
+<span id="cb25-3"><a href="#cb25-3"></a>  <span class="fu">as_tsibble</span>(</span>
+<span id="cb25-4"><a href="#cb25-4"></a>    <span class="at">index =</span> Quarter,</span>
+<span id="cb25-5"><a href="#cb25-5"></a>    <span class="at">key =</span> <span class="fu">c</span>(Region, State, Purpose)</span>
+<span id="cb25-6"><a href="#cb25-6"></a>  )</span>
+<span id="cb25-7"><a href="#cb25-7"></a>my_tourism</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tsibble: 24,320 x 5 [1Q]
+# Key:       Region, State, Purpose [304]
+   Quarter Region   State           Purpose  Trips
+     &lt;qtr&gt; &lt;chr&gt;    &lt;chr&gt;           &lt;chr&gt;    &lt;dbl&gt;
+ 1 1998 Q1 Adelaide South Australia Business  135.
+ 2 1998 Q2 Adelaide South Australia Business  110.
+ 3 1998 Q3 Adelaide South Australia Business  166.
+ 4 1998 Q4 Adelaide South Australia Business  127.
+ 5 1999 Q1 Adelaide South Australia Business  137.
+ 6 1999 Q2 Adelaide South Australia Business  200.
+ 7 1999 Q3 Adelaide South Australia Business  169.
+ 8 1999 Q4 Adelaide South Australia Business  134.
+ 9 2000 Q1 Adelaide South Australia Business  154.
+10 2000 Q2 Adelaide South Australia Business  169.
+# ℹ 24,310 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="example-1-cont-1" class="slide level2">
+<h2>Example 1 (con’t)</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a>distinct_Region <span class="ot">&lt;-</span> <span class="fu">distinct</span>(my_tourism, Region)</span>
+<span id="cb27-2"><a href="#cb27-2"></a></span>
+<span id="cb27-3"><a href="#cb27-3"></a>distinct_State <span class="ot">&lt;-</span> <span class="fu">distinct</span>(my_tourism, State)</span>
+<span id="cb27-4"><a href="#cb27-4"></a>distinct_Purpose <span class="ot">&lt;-</span> <span class="fu">distinct</span>(my_tourism, Purpose)</span>
+<span id="cb27-5"><a href="#cb27-5"></a></span>
+<span id="cb27-6"><a href="#cb27-6"></a><span class="fu">print</span>(<span class="fu">c</span>(distinct_Region, distinct_State,distinct_Purpose))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$Region
+ [1] "Adelaide"                        "Adelaide Hills"                 
+ [3] "Alice Springs"                   "Australia's Coral Coast"        
+ [5] "Australia's Golden Outback"      "Australia's North West"         
+ [7] "Australia's South West"          "Ballarat"                       
+ [9] "Barkly"                          "Barossa"                        
+[11] "Bendigo Loddon"                  "Blue Mountains"                 
+[13] "Brisbane"                        "Bundaberg"                      
+[15] "Canberra"                        "Capital Country"                
+[17] "Central Coast"                   "Central Highlands"              
+[19] "Central Murray"                  "Central NSW"                    
+[21] "Central Queensland"              "Clare Valley"                   
+[23] "Darling Downs"                   "Darwin"                         
+[25] "East Coast"                      "Experience Perth"               
+[27] "Eyre Peninsula"                  "Fleurieu Peninsula"             
+[29] "Flinders Ranges and Outback"     "Fraser Coast"                   
+[31] "Geelong and the Bellarine"       "Gippsland"                      
+[33] "Gold Coast"                      "Goulburn"                       
+[35] "Great Ocean Road"                "High Country"                   
+[37] "Hobart and the South"            "Hunter"                         
+[39] "Kakadu Arnhem"                   "Kangaroo Island"                
+[41] "Katherine Daly"                  "Lakes"                          
+[43] "Lasseter"                        "Launceston, Tamar and the North"
+[45] "Limestone Coast"                 "MacDonnell"                     
+[47] "Macedon"                         "Mackay"                         
+[49] "Mallee"                          "Melbourne"                      
+[51] "Melbourne East"                  "Murray East"                    
+[53] "Murraylands"                     "New England North West"         
+[55] "North Coast NSW"                 "North West"                     
+[57] "Northern"                        "Outback"                        
+[59] "Outback NSW"                     "Peninsula"                      
+[61] "Phillip Island"                  "Riverina"                       
+[63] "Riverland"                       "Snowy Mountains"                
+[65] "South Coast"                     "Spa Country"                    
+[67] "Sunshine Coast"                  "Sydney"                         
+[69] "The Murray"                      "Tropical North Queensland"      
+[71] "Upper Yarra"                     "Western Grampians"              
+[73] "Whitsundays"                     "Wilderness West"                
+[75] "Wimmera"                         "Yorke Peninsula"                
+
+$State
+[1] "South Australia"    "Northern Territory" "Western Australia" 
+[4] "Victoria"           "New South Wales"    "Queensland"        
+[7] "ACT"                "Tasmania"          
+
+$Purpose
+[1] "Business" "Holiday"  "Other"    "Visiting"</code></pre>
+</div>
+</div>
+</section>
+<section id="example-1-cont-2" class="slide level2">
+<h2>Example 1 (con’t)</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a>nobs <span class="ot">&lt;-</span> my_tourism <span class="sc">|&gt;</span></span>
+<span id="cb29-2"><a href="#cb29-2"></a>  <span class="fu">count</span>(Region, State, Purpose)</span>
+<span id="cb29-3"><a href="#cb29-3"></a><span class="fu">print</span>(nobs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 304 × 4
+   Region         State              Purpose      n
+   &lt;chr&gt;          &lt;chr&gt;              &lt;chr&gt;    &lt;int&gt;
+ 1 Adelaide       South Australia    Business    80
+ 2 Adelaide       South Australia    Holiday     80
+ 3 Adelaide       South Australia    Other       80
+ 4 Adelaide       South Australia    Visiting    80
+ 5 Adelaide Hills South Australia    Business    80
+ 6 Adelaide Hills South Australia    Holiday     80
+ 7 Adelaide Hills South Australia    Other       80
+ 8 Adelaide Hills South Australia    Visiting    80
+ 9 Alice Springs  Northern Territory Business    80
+10 Alice Springs  Northern Territory Holiday     80
+# ℹ 294 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="the-tsibble-index" class="slide level2">
+<h2>The <code>tsibble</code> index</h2>
+<p>Common time index variables can be created with these functions:</p>
+<div class="cell">
+<div class="cell-output-display">
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Frequency</th>
+<th style="text-align: left;">Function</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Annual</td>
+<td style="text-align: left;"><code>start:end</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Quarterly</td>
+<td style="text-align: left;"><code>yearquarter()</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Monthly</td>
+<td style="text-align: left;"><code>yearmonth()</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Weekly</td>
+<td style="text-align: left;"><code>yearweek()</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Daily</td>
+<td style="text-align: left;"><code>as_date()</code>, <code>ymd()</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Sub-daily</td>
+<td style="text-align: left;"><code>as_datetime()</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="time-index-examples" class="slide level2">
+<h2>time index examples</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a><span class="dv">2020</span><span class="sc">:</span><span class="dv">2024</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2020 2021 2022 2023 2024</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a><span class="fu">yearquarter</span>(<span class="st">"2024 Q1"</span>)<span class="sc">+</span><span class="dv">0</span><span class="sc">:</span><span class="dv">3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;yearquarter[4]&gt;
+[1] "2024 Q1" "2024 Q2" "2024 Q3" "2024 Q4"
+# Year starts on: January</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a><span class="fu">yearmonth</span>(<span class="st">"2024 1"</span>)<span class="sc">+</span><span class="dv">0</span><span class="sc">:</span><span class="dv">4</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;yearmonth[5]&gt;
+[1] "2024 Jan" "2024 Feb" "2024 Mar" "2024 Apr" "2024 May"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a><span class="fu">yearweek</span>(<span class="st">"2023 1"</span>)<span class="sc">+</span><span class="dv">0</span><span class="sc">:</span><span class="dv">5</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;yearweek[6]&gt;
+[1] "2022 W52" "2023 W01" "2023 W02" "2023 W03" "2023 W04" "2023 W05"
+# Week starts on: Monday</code></pre>
+</div>
+</div>
+</section>
+<section id="time-index-examples-1" class="slide level2">
+<h2>time index examples</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a><span class="fu">as.Date</span>(<span class="st">"2024-01-22"</span>) <span class="sc">+</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "2024-01-22" "2024-01-23" "2024-01-24" "2024-01-25"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a><span class="fu">ymd</span>(<span class="st">"2024-04-03"</span>)<span class="sc">+</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">4</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "2024-04-03" "2024-04-04" "2024-04-05" "2024-04-06" "2024-04-07"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1"></a><span class="fu">as_datetime</span>(<span class="st">"2024-04-03 00:09:15"</span>)<span class="sc">+</span><span class="dv">0</span><span class="sc">:</span><span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "2024-04-03 00:09:15 UTC" "2024-04-03 00:09:16 UTC"
+[3] "2024-04-03 00:09:17 UTC"</code></pre>
+</div>
+</div>
+</section>
+<section id="working-with-tsibble-objects" class="slide level2">
+<h2>Working with <code>tsibble</code> objects</h2>
+<p>Let’s use the <code>filter()</code> function to select rows.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tsibble: 320 x 5 [1Q]
+# Key:       Region, State, Purpose [4]
+   Quarter Region        State              Purpose  Trips
+     &lt;qtr&gt; &lt;chr&gt;         &lt;chr&gt;              &lt;chr&gt;    &lt;dbl&gt;
+ 1 1998 Q1 Alice Springs Northern Territory Business  7.54
+ 2 1998 Q2 Alice Springs Northern Territory Business  3.36
+ 3 1998 Q3 Alice Springs Northern Territory Business 21.8 
+ 4 1998 Q4 Alice Springs Northern Territory Business  3.98
+ 5 1999 Q1 Alice Springs Northern Territory Business 18.4 
+ 6 1999 Q2 Alice Springs Northern Territory Business 16.4 
+ 7 1999 Q3 Alice Springs Northern Territory Business  8.65
+ 8 1999 Q4 Alice Springs Northern Territory Business 15.9 
+ 9 2000 Q1 Alice Springs Northern Territory Business  4.88
+10 2000 Q2 Alice Springs Northern Territory Business 11.2 
+# ℹ 310 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="working-with-tsibble-objects-1" class="slide level2">
+<h2>Working with <code>tsibble</code> objects</h2>
+<p>Let’s calculate average trips over Purpose for each quarter in Alice Springs</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tsibble: 80 x 2 [1Q]
+   Quarter AverageTrips
+     &lt;qtr&gt;        &lt;dbl&gt;
+ 1 1998 Q1         5.05
+ 2 1998 Q2        14.1 
+ 3 1998 Q3        27.7 
+ 4 1998 Q4        10.2 
+ 5 1999 Q1        12.1 
+ 6 1999 Q2        17.0 
+ 7 1999 Q3        19.2 
+ 8 1999 Q4        16.5 
+ 9 2000 Q1         8.10
+10 2000 Q2         9.94
+# ℹ 70 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="working-with-tsibble-objects-2" class="slide level2">
+<h2>Working with <code>tsibble</code> objects</h2>
+<p>Create new tsibble with total number of trips by state</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tsibble: 640 x 3 [1Q]
+# Key:       State [8]
+   State Quarter TotalTrips
+   &lt;chr&gt;   &lt;qtr&gt;      &lt;dbl&gt;
+ 1 ACT   1998 Q1       551.
+ 2 ACT   1998 Q2       416.
+ 3 ACT   1998 Q3       436.
+ 4 ACT   1998 Q4       450.
+ 5 ACT   1999 Q1       379.
+ 6 ACT   1999 Q2       558.
+ 7 ACT   1999 Q3       449.
+ 8 ACT   1999 Q4       595.
+ 9 ACT   2000 Q1       600.
+10 ACT   2000 Q2       557.
+# ℹ 630 more rows</code></pre>
+</div>
 </div>
 <div class="footer footer-default">
 
@@ -705,7 +1056,7 @@ Orkhan Hasanaliyev
         progress: true,
 
         // Display the page number of the current slide
-        slideNumber: false,
+        slideNumber: 'c/t',
 
         // 'all', 'print', or 'speaker'
         showSlideNumber: 'all',

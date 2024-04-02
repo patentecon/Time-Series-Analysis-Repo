@@ -4,14 +4,26 @@ author: Orkhan Hasanaliyev
 format: 
   revealjs:
     transition: slide
+    slide-number: true
 editor: visual
 ---
 
+## 
+
+*"It is difficult to make predictions, especially about the future."*\
+                                                                                                         *Niels Bohr*
+
 ## Syllabus
 
-[Syllabus](images/Syllabus.pdf)
+[Syllabus](images/ECON%20174%20Syllabus%20Spring%202024.docx)
 
 Textbook: *Forecasting: principles and practice* by Hyndman and Athanasopoulos, available free online at <https://otexts.com/fpp3/>
+
+Accessing course data and scripts:
+
+-   Using github (might need GitZip for github browser extension to download weekly content) <https://github.com/patentecon/Time-Series-Analysis-Repo>
+
+-   Camino
 
 ## R and RStudio
 
@@ -158,7 +170,9 @@ global_economy
 **Warm Up: Explore another tsibble data**
 
 ## Creating `tsibble` object
+
 Let's create a `tsibble` object using `tsibble()` function
+
 ```{r}
 #| echo: true
 #| message: true
@@ -167,6 +181,160 @@ myGPA <- tsibble(
   Observation = c(3.5, 3.7, 3.9, 3.2),
   index = Year
 )
+myGPA
 ```
 
+## Coercing `tibble` object to `tsibble`
 
+Here is the `tibble` object
+
+```{r}
+#| echo: true
+#| message: true
+myGPA <- tibble(
+  Year = 2021:2024,
+  Observation = c(3.5, 3.7, 3.9, 3.2)
+)
+myGPA
+```
+
+## Coercing `tibble` object to `tsibble`
+
+By utilizing `as_tsibble()` we get
+
+```{r}
+#| echo: true
+#| message: true
+myGPA|> 
+  as_tsibble(index=Year)
+```
+
+## Example 1
+
+Let's download an excel file and read it. Note, this data is in `tibble`
+
+```{r}
+#| echo: true
+#| message: true
+download.file("http://OTexts.com/fpp3/extrafiles/tourism.xlsx",
+              tourism_file <- tempfile(), mode = "wb")
+my_tourism <- readxl::read_excel(tourism_file) 
+my_tourism
+
+```
+
+## Example 1 (con't)
+
+Coerce `tibble` object to `tsibble`
+
+```{r}
+#| echo: true
+#| message: true
+my_tourism <- my_tourism |>
+  mutate(Quarter = yearquarter(Quarter)) |>
+  as_tsibble(
+    index = Quarter,
+    key = c(Region, State, Purpose)
+  )
+my_tourism
+```
+
+## Example 1 (con't)
+
+```{r}
+#| echo: true
+#| message: true
+distinct_Region <- distinct(my_tourism, Region)
+
+distinct_State <- distinct(my_tourism, State)
+distinct_Purpose <- distinct(my_tourism, Purpose)
+
+print(c(distinct_Region, distinct_State,distinct_Purpose))
+
+```
+
+## Example 1 (con't)
+
+```{r}
+#| echo: true
+#| message: true
+nobs <- my_tourism |>
+  count(Region, State, Purpose)
+print(nobs)
+```
+
+## The `tsibble` index
+
+Common time index variables can be created with these functions:
+
+```{r tstable1, echo=FALSE}
+tribble(
+  ~`Frequency`, ~Function,
+  "Annual", "`start:end`",
+  "Quarterly", "`yearquarter()`",
+  "Monthly", "`yearmonth()`",
+  "Weekly", "`yearweek()`",
+  "Daily", "`as_date()`, `ymd()`",
+  "Sub-daily", "`as_datetime()`"
+) |>
+  knitr::kable(booktabs = TRUE)
+```
+
+## time index examples
+
+```{r}
+#| echo: true
+#| message: true
+2020:2024
+
+yearquarter("2024 Q1")+0:3
+
+yearmonth("2024 1")+0:4
+
+yearweek("2023 1")+0:5
+
+```
+
+## time index examples
+
+```{r}
+#| echo: true
+#| message: true
+
+as.Date("2024-01-22") + 0:3
+
+ymd("2024-04-03")+ 0:4
+
+as_datetime("2024-04-03 00:09:15")+0:2
+```
+
+## Working with `tsibble` objects
+
+Let's use the `filter()` function to select rows.
+
+```{r }
+my_tourism |>
+  filter(Region == "Alice Springs")
+```
+
+## Working with `tsibble` objects
+
+Let's calculate average trips over Purpose for each quarter in Alice Springs
+
+```{r }
+my_tourism |>
+  filter(Region == "Alice Springs") |>
+  summarise(AverageTrips=mean(Trips))
+```
+
+## Working with `tsibble` objects
+
+Create new tsibble with total number of trips by state
+
+```{r}
+state_tourism <- my_tourism |>
+  group_by(State) |>
+  summarise(TotalTrips = sum(Trips))
+
+state_tourism
+```

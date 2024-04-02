@@ -5,22 +5,25 @@ format: html
 editor: visual
 ---
 
+## Grading Instructions
 
-## Grading guidance
+You will receive 60 points for submitting the assignment, full points for each correct part as shown below and no points for incorrect answers.
 
-You will receive 60 points for submitting the assignment and a few points for each correct part as shown below.
+For graders: Please download an assigned student's file, type your comments and corrections, enter the grade on Camino and upload back the file by Tuesday, April 9 at midnight.
 
-----------------------
+------------------------------------------------------------------------
+
 ## Getting data from FRED: (10 points)
 
 For this assignment you need to access FRED database and get Real GDP per Capita for the US (ID# A939RX0Q048SBEA).
 
 Read the following instructions to learn how to obtain access to FRED database using FRED API. <https://cran.r-project.org/web/packages/fredr/vignettes/fredr.html>
 
-Once you get access to FRED, retrieve Real GDP per Capita between the first quarter of 1970 and the first quarter of 2024.
+Once you get access to FRED, retrieve Real GDP per Capita between the first quarter of 1970 and the last quarter of 2023.
 
-Show your code below
-Make sure to not display your FRED API key, it is a private information.  
+Show your code below and make sure to comment your code.
+
+Do not display your FRED API key, it is a private information.
 
 ```{r}
 #| label: setup
@@ -31,15 +34,7 @@ Make sure to not display your FRED API key, it is a private information.
 
 Now that you have retrieved the data, answer the following questions:
 
-## What is the type of this data? (6 points)
-```{r}
-#| echo: true
-#| message: true
-
-
-```
-
-## Change the series_id variable values to "RGDP per capita": (6 points)
+## What is the type of this data? (6 points) 
 
 ```{r}
 #| echo: true
@@ -49,6 +44,17 @@ Now that you have retrieved the data, answer the following questions:
 ```
 
 ## Coerce your data frame to tsibble: (6 points)
+
+```{r}
+#| echo: true
+#| message: true
+
+
+```
+
+ 
+
+## Change the series_id variable values to "RGDP per capita": (6 points)
 
 ```{r}
 #| echo: true
@@ -74,3 +80,4 @@ Now that you have retrieved the data, answer the following questions:
 
 
 ```
+
