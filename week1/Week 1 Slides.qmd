@@ -227,6 +227,7 @@ my_tourism
 
 Coerce `tibble` object to `tsibble`
 
+
 ```{r}
 #| echo: true
 #| message: true
@@ -238,6 +239,20 @@ my_tourism <- my_tourism |>
   )
 my_tourism
 ```
+
+<!-- ## Example 1 (con't) -->
+
+<!-- ```{r} -->
+
+<!-- #| echo: true -->
+
+<!-- #| message: true -->
+
+<!-- my_tourism|> -->
+
+<!--   distinct(Purpose) -->
+
+<!-- ``` -->
 
 ## Example 1 (con't)
 
@@ -293,6 +308,20 @@ yearmonth("2024 1")+0:4
 
 yearweek("2023 1")+0:5
 
+
+```
+
+## time index examples
+
+```{r}
+#| echo: true
+#| message: true
+
+
+make_yearmonth(year = 2023, month = 4:5)
+
+make_yearmonth(year = 2022:2023, month = 4:5)
+
 ```
 
 ## time index examples
@@ -306,15 +335,52 @@ as.Date("2024-01-22") + 0:3
 ymd("2024-04-03")+ 0:4
 
 as_datetime("2024-04-03 00:09:15")+0:2
+
+x <- seq(as.Date("2023-01-01"), as.Date("2023-04-30"), by = "1 month")
+yearmonth(x)
+
 ```
+
+
 
 ## Working with `tsibble` objects
 
 Let's use the `filter()` function to select rows.
 
 ```{r }
+#| echo: true
+#| message: true
 my_tourism |>
   filter(Region == "Alice Springs")
+```
+
+## Working with `tsibble` objects
+
+We can create a new variable using `mutate()` function.
+
+```{r }
+#| echo: true
+#| message: true
+my_tourism_new <- my_tourism |>
+  filter(Region == "Alice Springs")|>
+  mutate(Cost = Trips *100)
+
+my_tourism_new
+```
+
+## Working with `tsibble` objects
+
+We can select/deselect a variable using `select()` function.
+
+```{r }
+#| echo: true
+#| message: true
+my_tourism_new <- my_tourism_new|>
+  filter(Region == "Alice Springs")|>
+  mutate(Cost = Trips *100)|>
+  select(-Cost)
+
+my_tourism_new
 ```
 
 ## Working with `tsibble` objects
@@ -322,6 +388,8 @@ my_tourism |>
 Let's calculate average trips over Purpose for each quarter in Alice Springs
 
 ```{r }
+#| echo: true
+#| message: true
 my_tourism |>
   filter(Region == "Alice Springs") |>
   summarise(AverageTrips=mean(Trips))
@@ -332,9 +400,36 @@ my_tourism |>
 Create new tsibble with total number of trips by state
 
 ```{r}
+#| echo: true
+#| message: true
 state_tourism <- my_tourism |>
   group_by(State) |>
   summarise(TotalTrips = sum(Trips))
 
 state_tourism
+```
+
+## Working with `tsibble` objects
+
+Create new `tsibble` with annual number of trips by state
+
+```{r}
+#| echo: true
+#| message: true
+annual_state_tourism <- my_tourism |>
+  group_by(State) |>
+  index_by(Year = ~year(.))|>
+  summarise(TotalTrips = sum(Trips))
+
+annual_state_tourism 
+```
+
+```{r}
+#| echo: true
+#| message: true
+annual_state_tourism |>
+  group_by(State) |>
+  index_by()|>
+  summarise(TotalTrips)
+
 ```

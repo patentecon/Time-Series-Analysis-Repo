@@ -762,6 +762,13 @@ Orkhan Hasanaliyev
 # ℹ 24,310 more rows</code></pre>
 </div>
 </div>
+<!-- ## Example 1 (con't) -->
+<!-- ```{r} -->
+<!-- #| echo: true -->
+<!-- #| message: true -->
+<!-- my_tourism|> -->
+<!--   distinct(Purpose) -->
+<!-- ``` -->
 </section>
 <section id="example-1-cont-1" class="slide level2">
 <h2>Example 1 (con’t)</h2>
@@ -918,18 +925,39 @@ $Purpose
 <section id="time-index-examples-1" class="slide level2">
 <h2>time index examples</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a><span class="fu">as.Date</span>(<span class="st">"2024-01-22"</span>) <span class="sc">+</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a><span class="fu">make_yearmonth</span>(<span class="at">year =</span> <span class="dv">2023</span>, <span class="at">month =</span> <span class="dv">4</span><span class="sc">:</span><span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;yearmonth[2]&gt;
+[1] "2023 Apr" "2023 May"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a><span class="fu">make_yearmonth</span>(<span class="at">year =</span> <span class="dv">2022</span><span class="sc">:</span><span class="dv">2023</span>, <span class="at">month =</span> <span class="dv">4</span><span class="sc">:</span><span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;yearmonth[2]&gt;
+[1] "2022 Apr" "2023 May"</code></pre>
+</div>
+</div>
+</section>
+<section id="time-index-examples-2" class="slide level2">
+<h2>time index examples</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1"></a><span class="fu">as.Date</span>(<span class="st">"2024-01-22"</span>) <span class="sc">+</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "2024-01-22" "2024-01-23" "2024-01-24" "2024-01-25"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a><span class="fu">ymd</span>(<span class="st">"2024-04-03"</span>)<span class="sc">+</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">4</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1"></a><span class="fu">ymd</span>(<span class="st">"2024-04-03"</span>)<span class="sc">+</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">4</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "2024-04-03" "2024-04-04" "2024-04-05" "2024-04-06" "2024-04-07"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1"></a><span class="fu">as_datetime</span>(<span class="st">"2024-04-03 00:09:15"</span>)<span class="sc">+</span><span class="dv">0</span><span class="sc">:</span><span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1"></a><span class="fu">as_datetime</span>(<span class="st">"2024-04-03 00:09:15"</span>)<span class="sc">+</span><span class="dv">0</span><span class="sc">:</span><span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "2024-04-03 00:09:15 UTC" "2024-04-03 00:09:16 UTC"
 [3] "2024-04-03 00:09:17 UTC"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fu">as.Date</span>(<span class="st">"2023-01-01"</span>), <span class="fu">as.Date</span>(<span class="st">"2023-04-30"</span>), <span class="at">by =</span> <span class="st">"1 month"</span>)</span>
+<span id="cb49-2"><a href="#cb49-2"></a><span class="fu">yearmonth</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;yearmonth[4]&gt;
+[1] "2023 Jan" "2023 Feb" "2023 Mar" "2023 Apr"</code></pre>
 </div>
 </div>
 </section>
@@ -937,6 +965,8 @@ $Purpose
 <h2>Working with <code>tsibble</code> objects</h2>
 <p>Let’s use the <code>filter()</code> function to select rows.</p>
 <div class="cell">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1"></a>my_tourism <span class="sc">|&gt;</span></span>
+<span id="cb51-2"><a href="#cb51-2"></a>  <span class="fu">filter</span>(Region <span class="sc">==</span> <span class="st">"Alice Springs"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tsibble: 320 x 5 [1Q]
 # Key:       Region, State, Purpose [4]
@@ -958,8 +988,68 @@ $Purpose
 </section>
 <section id="working-with-tsibble-objects-1" class="slide level2">
 <h2>Working with <code>tsibble</code> objects</h2>
+<p>We can create a new variable using <code>mutate()</code> function.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1"></a>my_tourism_new <span class="ot">&lt;-</span> my_tourism <span class="sc">|&gt;</span></span>
+<span id="cb53-2"><a href="#cb53-2"></a>  <span class="fu">filter</span>(Region <span class="sc">==</span> <span class="st">"Alice Springs"</span>)<span class="sc">|&gt;</span></span>
+<span id="cb53-3"><a href="#cb53-3"></a>  <span class="fu">mutate</span>(<span class="at">Cost =</span> Trips <span class="sc">*</span><span class="dv">100</span>)</span>
+<span id="cb53-4"><a href="#cb53-4"></a></span>
+<span id="cb53-5"><a href="#cb53-5"></a>my_tourism_new</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tsibble: 320 x 6 [1Q]
+# Key:       Region, State, Purpose [4]
+   Quarter Region        State              Purpose  Trips  Cost
+     &lt;qtr&gt; &lt;chr&gt;         &lt;chr&gt;              &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;
+ 1 1998 Q1 Alice Springs Northern Territory Business  7.54  754.
+ 2 1998 Q2 Alice Springs Northern Territory Business  3.36  336.
+ 3 1998 Q3 Alice Springs Northern Territory Business 21.8  2178.
+ 4 1998 Q4 Alice Springs Northern Territory Business  3.98  398.
+ 5 1999 Q1 Alice Springs Northern Territory Business 18.4  1841.
+ 6 1999 Q2 Alice Springs Northern Territory Business 16.4  1641.
+ 7 1999 Q3 Alice Springs Northern Territory Business  8.65  865.
+ 8 1999 Q4 Alice Springs Northern Territory Business 15.9  1590.
+ 9 2000 Q1 Alice Springs Northern Territory Business  4.88  488.
+10 2000 Q2 Alice Springs Northern Territory Business 11.2  1123.
+# ℹ 310 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="working-with-tsibble-objects-2" class="slide level2">
+<h2>Working with <code>tsibble</code> objects</h2>
+<p>We can select/deselect a variable using <code>select()</code> function.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1"></a>my_tourism_new <span class="ot">&lt;-</span> my_tourism_new<span class="sc">|&gt;</span></span>
+<span id="cb55-2"><a href="#cb55-2"></a>  <span class="fu">filter</span>(Region <span class="sc">==</span> <span class="st">"Alice Springs"</span>)<span class="sc">|&gt;</span></span>
+<span id="cb55-3"><a href="#cb55-3"></a>  <span class="fu">mutate</span>(<span class="at">Cost =</span> Trips <span class="sc">*</span><span class="dv">100</span>)<span class="sc">|&gt;</span></span>
+<span id="cb55-4"><a href="#cb55-4"></a>  <span class="fu">select</span>(<span class="sc">-</span>Cost)</span>
+<span id="cb55-5"><a href="#cb55-5"></a></span>
+<span id="cb55-6"><a href="#cb55-6"></a>my_tourism_new</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tsibble: 320 x 5 [1Q]
+# Key:       Region, State, Purpose [4]
+   Quarter Region        State              Purpose  Trips
+     &lt;qtr&gt; &lt;chr&gt;         &lt;chr&gt;              &lt;chr&gt;    &lt;dbl&gt;
+ 1 1998 Q1 Alice Springs Northern Territory Business  7.54
+ 2 1998 Q2 Alice Springs Northern Territory Business  3.36
+ 3 1998 Q3 Alice Springs Northern Territory Business 21.8 
+ 4 1998 Q4 Alice Springs Northern Territory Business  3.98
+ 5 1999 Q1 Alice Springs Northern Territory Business 18.4 
+ 6 1999 Q2 Alice Springs Northern Territory Business 16.4 
+ 7 1999 Q3 Alice Springs Northern Territory Business  8.65
+ 8 1999 Q4 Alice Springs Northern Territory Business 15.9 
+ 9 2000 Q1 Alice Springs Northern Territory Business  4.88
+10 2000 Q2 Alice Springs Northern Territory Business 11.2 
+# ℹ 310 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="working-with-tsibble-objects-3" class="slide level2">
+<h2>Working with <code>tsibble</code> objects</h2>
 <p>Let’s calculate average trips over Purpose for each quarter in Alice Springs</p>
 <div class="cell">
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1"></a>my_tourism <span class="sc">|&gt;</span></span>
+<span id="cb57-2"><a href="#cb57-2"></a>  <span class="fu">filter</span>(Region <span class="sc">==</span> <span class="st">"Alice Springs"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb57-3"><a href="#cb57-3"></a>  <span class="fu">summarise</span>(<span class="at">AverageTrips=</span><span class="fu">mean</span>(Trips))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tsibble: 80 x 2 [1Q]
    Quarter AverageTrips
@@ -978,10 +1068,15 @@ $Purpose
 </div>
 </div>
 </section>
-<section id="working-with-tsibble-objects-2" class="slide level2">
+<section id="working-with-tsibble-objects-4" class="slide level2">
 <h2>Working with <code>tsibble</code> objects</h2>
 <p>Create new tsibble with total number of trips by state</p>
 <div class="cell">
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1"></a>state_tourism <span class="ot">&lt;-</span> my_tourism <span class="sc">|&gt;</span></span>
+<span id="cb59-2"><a href="#cb59-2"></a>  <span class="fu">group_by</span>(State) <span class="sc">|&gt;</span></span>
+<span id="cb59-3"><a href="#cb59-3"></a>  <span class="fu">summarise</span>(<span class="at">TotalTrips =</span> <span class="fu">sum</span>(Trips))</span>
+<span id="cb59-4"><a href="#cb59-4"></a></span>
+<span id="cb59-5"><a href="#cb59-5"></a>state_tourism</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tsibble: 640 x 3 [1Q]
 # Key:       State [8]
@@ -998,6 +1093,58 @@ $Purpose
  9 ACT   2000 Q1       600.
 10 ACT   2000 Q2       557.
 # ℹ 630 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="working-with-tsibble-objects-5" class="slide level2">
+<h2>Working with <code>tsibble</code> objects</h2>
+<p>Create new <code>tsibble</code> with annual number of trips by state</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1"></a>annual_state_tourism <span class="ot">&lt;-</span> my_tourism <span class="sc">|&gt;</span></span>
+<span id="cb61-2"><a href="#cb61-2"></a>  <span class="fu">group_by</span>(State) <span class="sc">|&gt;</span></span>
+<span id="cb61-3"><a href="#cb61-3"></a>  <span class="fu">index_by</span>(<span class="at">Year =</span> <span class="sc">~</span><span class="fu">year</span>(.))<span class="sc">|&gt;</span></span>
+<span id="cb61-4"><a href="#cb61-4"></a>  <span class="fu">summarise</span>(<span class="at">TotalTrips =</span> <span class="fu">sum</span>(Trips))</span>
+<span id="cb61-5"><a href="#cb61-5"></a></span>
+<span id="cb61-6"><a href="#cb61-6"></a>annual_state_tourism </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tsibble: 160 x 3 [1Y]
+# Key:       State [8]
+   State  Year TotalTrips
+   &lt;chr&gt; &lt;dbl&gt;      &lt;dbl&gt;
+ 1 ACT    1998      1853.
+ 2 ACT    1999      1980.
+ 3 ACT    2000      2091.
+ 4 ACT    2001      2089.
+ 5 ACT    2002      1974.
+ 6 ACT    2003      1945.
+ 7 ACT    2004      1881.
+ 8 ACT    2005      1987.
+ 9 ACT    2006      1893.
+10 ACT    2007      1955.
+# ℹ 150 more rows</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1"></a>annual_state_tourism <span class="sc">|&gt;</span></span>
+<span id="cb63-2"><a href="#cb63-2"></a>  <span class="fu">group_by</span>(State) <span class="sc">|&gt;</span></span>
+<span id="cb63-3"><a href="#cb63-3"></a>  <span class="fu">index_by</span>()<span class="sc">|&gt;</span></span>
+<span id="cb63-4"><a href="#cb63-4"></a>  <span class="fu">summarise</span>(TotalTrips)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tsibble: 160 x 3 [1Y]
+# Key:       State [8]
+   State  Year TotalTrips
+   &lt;chr&gt; &lt;dbl&gt;      &lt;dbl&gt;
+ 1 ACT    1998      1853.
+ 2 ACT    1999      1980.
+ 3 ACT    2000      2091.
+ 4 ACT    2001      2089.
+ 5 ACT    2002      1974.
+ 6 ACT    2003      1945.
+ 7 ACT    2004      1881.
+ 8 ACT    2005      1987.
+ 9 ACT    2006      1893.
+10 ACT    2007      1955.
+# ℹ 150 more rows</code></pre>
 </div>
 </div>
 <div class="footer footer-default">

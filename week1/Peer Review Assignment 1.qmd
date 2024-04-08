@@ -34,7 +34,7 @@ Do not display your FRED API key, it is a private information.
 
 Now that you have retrieved the data, answer the following questions:
 
-## What is the type of this data? (6 points) 
+## What is the type of this data? (6 points)
 
 ```{r}
 #| echo: true
@@ -51,8 +51,6 @@ Now that you have retrieved the data, answer the following questions:
 
 
 ```
-
- 
 
 ## Change the series_id variable values to "RGDP per capita": (6 points)
 
@@ -80,4 +78,3 @@ Now that you have retrieved the data, answer the following questions:
 
 
 ```
-

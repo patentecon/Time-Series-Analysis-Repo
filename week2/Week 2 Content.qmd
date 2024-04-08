@@ -1,0 +1,345 @@
+---
+title: "Time Series Analysis: Week 2 - April 8"
+author: Orkhan Hasanaliyev
+format: 
+  html:
+    code-fold: true
+    code-summary: "Hidden code"
+editor: visual
+---
+
+
+
+## 
+
+*"You can observe a lot just by watching"*\
+                                                                                                          Yogi Berra
+
+## Load ffp3 package
+
+-   Load the following packages
+
+```{r}
+#| label: setup
+#| echo: true
+#| message: false
+library(tidyverse)
+library(fpp3)
+library(tswge)
+
+```
+
+## Graphs
+
+Plots allow us to identify:
+
+-   Patterns
+
+-   Unusual observations
+
+-   Changes over time
+
+-   Relationships between variables.
+
+## US GDP
+
+Filter the US data from global_economy
+
+```{r}
+#| echo: true
+#| message: true
+us_economy <- global_economy %>%
+filter(Country == "United States")
+
+print(us_economy)
+```
+
+## The US GDP
+
+Plot the US GDP
+
+```{r}
+#| echo: true
+#| message: true
+us_economy |> autoplot(GDP) +
+    labs(title = "Nominal GDP, the US ",
+       subtitle = "",
+       y = "Nominal GDP (trln US$)")
+
+```
+
+## Global Temperature
+
+```{r}
+#| echo: true
+#| message: true
+
+global_temp<- tibble(
+  Year = 1850:2009,
+  Temperature = hadley
+)
+
+global_temp<- global_temp|>
+  as_tsibble(index=Year)
+
+
+global_temp|>
+  autoplot(Temperature)
+
+```
+
+## Time series patterns
+
+Trend
+
+:   pattern exists when there is a long-term increase or decrease in the data.
+
+Seasonal
+
+:   pattern exists when a series is influenced by seasonal factors (e.g., the quarter of the year, the month, or day of the week).
+
+Cyclic
+
+:   pattern exists when data exhibit rises and falls that are *not of fixed period*
+
+## Time series components
+
+Differences between seasonal and cyclic patterns:
+
+-   seasonal pattern constant length; cyclic pattern variable length
+-   average length of cycle longer than length of seasonal pattern
+-   magnitude of cycle more variable than magnitude of seasonal pattern
+
+## Domestic Car Production
+
+```{r}
+#| echo: true
+#| message: true
+
+library(fredr)
+
+fredr_set_key("33223ed79fd61ea6915872b9a2cc2256")
+
+car_prod <- fredr(
+  series_id = "DAUPNSA"
+)
+
+car_prod<- car_prod|>
+  mutate(date = yearmonth(date)) |>
+  as_tsibble(
+    index = date
+  )
+
+```
+
+## Domestic Car Production
+
+```{r}
+#| echo: true
+#| message: true
+
+car_prod|>autoplot()
+```
+
+## Domestic Car Production
+
+Use `gg_season()` to plot the data against the individual "seasons"
+
+```{r}
+#| echo: true
+#| message: true
+
+car_prod|>
+  gg_season()
+```
+
+## Australian Electricity Production
+
+```{r}
+#| echo: true
+#| message: true
+aus_production |>
+  filter(year(Quarter) >= 1980) |>
+  autoplot(Electricity) +
+  labs(y = "GWh", title = "Australian electricity production")
+```
+
+## The US Retail Employment
+
+```{r}
+#| echo: true
+#| message: true
+us_employment |>
+  filter(Title == "Retail Trade", year(Month) >= 1980) |>
+  autoplot(Employed / 1e3) + geom_point() + 
+  labs(y = "Million people", title = "Retail employment, USA")
+```
+
+## The US Retail Employment
+
+```{r}
+#| echo: true
+#| message: true
+us_employment |>
+  filter(Title == "Retail Trade", year(Month) >= 1980) |>
+  gg_season()+
+  labs(y = "Million people", title = "Retail employment, USA")
+```
+
+## US Gas Consumption
+
+```{r}
+#| echo: true
+#| message: true
+
+#install.packages('USgas')
+library(USgas)
+
+head(us_total)
+
+```
+
+## CA and ME gas consumption
+
+```{r}
+#| echo: true
+#| message: true
+
+us_tsibble <- us_total |>
+  as_tsibble(index=year, key=state)
+# Draw CA and ME gas consumption over time
+us_tsibble |>
+  filter(state %in% c("California","Maine")) |>
+  autoplot(y/1e3) +
+  labs(y = "billion cubic feet")
+
+```
+
+## Unemployment Claims
+
+```{r}
+#| echo: true
+#| message: true
+
+un_claims <- fredr(
+  series_id = "CCNSA"
+)
+
+un_claims<- un_claims|>
+  mutate(date = yearweek(date)) |>
+  as_tsibble(
+    index = date
+  )
+```
+
+## Unemployment Claims
+
+```{r}
+#| echo: true
+#| message: true
+
+un_claims|>autoplot()+
+    labs(title = "Continued Claims ",
+       subtitle = "Insured Unemployment",
+       y = "Number")
+```
+
+## Unemployment Claims
+
+```{r}
+#| echo: true
+#| message: true
+un_claims|>
+  gg_season()
+```
+
+## Electricity Consumption
+
+```{r}
+#| echo: true
+#| message: true
+vic_elec 
+
+```
+
+## Electricity Consumption
+
+```{r}
+#| echo: true
+#| message: true
+vic_elec |> autoplot()
+
+```
+
+## Electricity Consumption
+
+```{r}
+#| echo: true
+#| message: true
+vic_elec |> gg_season(Demand)
+
+```
+
+## Electricity Consumption
+
+```{r}
+#| echo: true
+#| message: true
+vic_elec |> gg_season(Demand, period = "week")
+
+```
+
+## Electricity Consumption
+
+```{r}
+#| echo: true
+#| message: true
+vic_elec |> gg_season(Demand, period = "day")
+
+```
+
+## The US Retail Employment
+
+```{r}
+#| echo: true
+#| message: true
+us_employment |>
+  filter(Title == "Retail Trade", year(Month) >= 1980) |>
+  gg_subseries()+
+  labs(y = "Million people", title = "Retail employment, USA" )+
+  aes(color=Title)
+```
+
+## The US Retail Employment
+
+```{r}
+#| echo: true
+#| message: true
+us_employment |>
+  filter(Title %in% c("Retail Trade", "Mining and Logging", "Professional and Business Services", "Education and Health Services"), year(Month) >= 1980) |>
+  autoplot()+
+  labs(y = "Million people", title = "Employment by Sector, USA")+   aes(color=Title)
+```
+
+## The US Retail Employment
+
+```{r}
+#| echo: true
+#| message: true
+us_employment |>
+  filter(Title %in% c("Retail Trade", "Mining and Logging", "Professional and Business Services", "Education and Health Services"), year(Month) >= 1980) |>
+  gg_season()+
+  labs(y = "Million people", title = "Employment by Sectors, USA")
+```
+
+## The US Retail Employment
+
+```{r}
+#| echo: true
+#| message: true
+us_employment |>
+  filter(Title %in% c("Retail Trade", "Mining and Logging", "Professional and Business Services", "Education and Health Services"), year(Month) >= 1980) |>
+  gg_subseries(period="month")+
+  facet_wrap(vars(Title), nrow = 2, scales = "free_y")+
+  labs(y = "Million people", title = "Employment by Sectors, USA")
+```

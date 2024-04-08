@@ -1,0 +1,148 @@
+---
+title: "Time Series Analysis: Week 2"
+author: Orkhan Hasanaliyev
+format: 
+  revealjs:
+    transition: slide
+    slide-number: true
+editor: visual
+---
+
+## 
+
+*"You can observe a lot just by watching"*\
+                                                                                                          Yogi Berra
+
+## Load ffp3 package
+
+-   As usual load fpp3 package
+
+```{r}
+#| label: setup
+#| echo: true
+#| message: true
+library(tidyverse)
+library(fpp3)
+library(tswge)
+
+```
+
+## Graphs
+
+Plots allow us to identify:
+
+-   Patterns
+
+-   Unusual observations
+
+-   Changes over time
+
+-   Relationships between variables.
+
+## US GDP
+
+Filter the US data from global_economy
+
+```{r}
+us_economy <- global_economy %>%
+filter(Country == "United States")
+
+print(us_economy)
+```
+
+## The US GDP
+
+Plot the US GDP
+
+```{r}
+us_economy |> autoplot(GDP)
+
+```
+
+## Global Temperature
+
+```{r}
+
+global_temp<- tibble(
+  Year = 1850:2009,
+  Temperature = hadley
+)
+
+global_temp<- global_temp|>
+  as_tsibble(index=Year)
+
+
+global_temp|>
+  autoplot(Temperature)
+
+```
+
+```{# {r}
+# 
+# 
+# global.temp|>
+#   mutate(Year = 1850:2009) |>
+#   as_tsibble(
+#     index = Year
+#   )
+# global.temp
+```
+
+```         
+```
+
+
+```{r}
+
+library(fredr)
+# library(purrr) purrr is already installed with tidyverse 
+
+usethis::edit_r_environ()
+
+# NA000334Q - quarterly GDP, millions of $ not seasonally adjusted 
+# NA000349Q - quarterly Personal Consumption Expenditure, millions of $, not seasonally adjusted
+# B230RC0Q173SBEA - Population, thousands, not seasonally adjusted
+
+Fred_data <- map_dfr(c("NA000334Q","ND000349Q", "B230RC0Q173SBEA"), 
+  observation_start = as.Date("1947-01-01"),
+  observation_end = as.Date("2023-12-31"), fredr)
+
+Fred_data |>
+  mutate(date = yearquarter(date)) |>
+  as_tsibble(
+    index = date
+  )
+
+```
+
+```{r}
+
+Fred_data |>
+  mutate(date = yearquarter(date)) |>
+  as_tsibble(
+    index = date,
+    key = series_id
+  )
+Fred_data
+```
+
+
+```{r}
+
+new_data(Fred_data, NGDP_per_capita = (NA000334Q*1000)/B230RC0Q173SBEA)
+# autoplot(NGDP_per_capita, NGDP_per_capita) +
+#   labs(title = "NGDP per Capita",
+#        y = "NGDP per capita"
+       )
+```
+
+```{r}
+
+NGDP_per_capita<- Fred_data |>
+#  filter(series_id == "NA000334Q" & "B230RC0Q173SBEA") |>
+  mutate(NGDP_per_capita = (NA000334Q*1000)/B230RC0Q173SBEA)
+# autoplot(NGDP_per_capita, NGDP_per_capita) +
+#   labs(title = "NGDP per Capita",
+#        y = "NGDP per capita"
+       )
+```
